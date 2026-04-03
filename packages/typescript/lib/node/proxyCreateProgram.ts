@@ -222,19 +222,6 @@ export function proxyCreateProgram(
 						compilerOptions,
 					);
 					try {
-						if (
-							resolveModuleNameLiterals
-							&& moduleLiterals.every(name => !pluginExtensions.some(ext => name.text.endsWith(ext)))
-						) {
-							return resolveModuleNameLiterals(
-								moduleLiterals,
-								containingFile,
-								redirectedReference,
-								compilerOptions,
-								containingSourceFile,
-								...rest,
-							);
-						}
 						return moduleLiterals.map(moduleLiteral => {
 							const mode = ts.getModeForUsageLocation(containingSourceFile, moduleLiteral, compilerOptions);
 							return resolveModuleName(
@@ -259,16 +246,6 @@ export function proxyCreateProgram(
 					compilerOptions,
 					containingSourceFile,
 				) => {
-					if (resolveModuleNames && moduleNames.every(name => !pluginExtensions.some(ext => name.endsWith(ext)))) {
-						return resolveModuleNames(
-							moduleNames,
-							containingFile,
-							reusedNames,
-							redirectedReference,
-							compilerOptions,
-							containingSourceFile,
-						);
-					}
 					return moduleNames.map(moduleName => {
 						return resolveModuleName(
 							moduleName,
